@@ -16,10 +16,9 @@ struct ShowRowView : View {
     }
     
     var body: some View {
-        VStack.init(alignment: HorizontalAlignment.leading) {
-            Text(show.band).font(.headline)
-            Spacer()
-            Text("@ \(show.metadata)").font(.footnote)
+        VStack.init(alignment: .leading) {
+            Text("\(show.isAsterisked ? "* " : "")\(show.band)").font(.headline)
+            Text("@\(show.metadata)").font(.footnote)
         }
     }
 }

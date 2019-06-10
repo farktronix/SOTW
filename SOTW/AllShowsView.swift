@@ -18,13 +18,15 @@ struct AllShowsView : View {
                     if (day.isVisible) {
                         Section(header: Text("\(day.line)")) {
                             ForEach(day.shows) { show in
-                                ShowRowView(show)
+                                NavigationButton(destination: ShowDetailView(show: show)) {
+                                    ShowRowView(show)
+                                }
                             }
                         }
                     }
                 }
             }
-            .navigationBarTitle(Text("Shows Of The Week"))
+            .navigationBarTitle(Text("SOTW"))
         }
     }
 }
