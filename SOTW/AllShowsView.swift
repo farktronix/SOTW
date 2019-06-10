@@ -9,28 +9,32 @@
 import SwiftUI
 
 struct AllShowsView : View {
-    @EnvironmentObject private var userData: UserData
+    @EnvironmentObject private var daysData: DaysStore
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(Array(userData.groupedShows.keys.sorted())) { sectionHeader in
-                    Section(header: Text("\(sectionHeader)")) {
-                        ForEach(self.userData.groupedShows[sectionHeader] ?? []) { show in
-                            ShowRowView(show)
+                ForEach(daysData.days) { day in
+                    if (day.isVisible) {
+                        Section(header: Text("\(day.line)")) {
+                            ForEach(day.shows) { show in
+                                NavigationButton(destination: ShowDetailView(show: show)) {
+                                    ShowRowView(show)
+                                }
+                            }
                         }
                     }
                 }
             }
-            .navigationBarTitle(Text("Shows Of The Week"))
+            .navigationBarTitle(Text("SOTW"))
         }
     }
 }
 
 #if DEBUG
-struct AllShowsView_Previews : PreviewProvider {
-    static var previews: some View {
-        AllShowsView().environmentObject(UserData())
-    }
-}
+//struct AllShowsView_Previews : PreviewProvider {
+//    static var previews: some View {
+//        AllShowsView().environmentObject(DaysStore())
+//    }
+//}
 #endif

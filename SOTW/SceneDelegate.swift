@@ -21,12 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Use a UIHostingController as window root view controller
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let environmentObject = UserData()
+        let environmentObject = DaysStore(service: .init())
+        environmentObject.fetch()
         let rootView = AllShowsView().environmentObject(environmentObject)
         window.rootViewController = UIHostingController(rootView: rootView)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
-            environmentObject.shows.append(Show(date: Date(timeInterval: 60*60*24*2, since: Date()), artist: "Phish", location: "Dicks"))
-        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+//            environmentObject.shows.append(Show(date: Date(timeInterval: 60*60*24*2, since: Date()), artist: "Phish", location: "Dicks"))
+//        }
         self.window = window
         window.makeKeyAndVisible()
     }

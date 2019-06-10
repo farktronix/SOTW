@@ -10,24 +10,14 @@ import Foundation
 import SwiftUI
 
 struct Show : Hashable, Codable, Identifiable {
-    let date : Date
-    let artist : String
-    let location : String
+    let line: String
+    let band: String
+    let metadata: String
+    let isAsterisked: Bool
     
     var id: Int {
         get {
-           return self.date.hashValue ^ self.artist.hashValue ^ self.location.hashValue
-        }
-    }
-    static var dateFormatter: DateFormatter = {
-        let d = DateFormatter()
-        d.dateFormat = "EEEE (M/d)"
-        return d
-    }()
-    
-    var sectionHeader : String {
-        get {
-            return Show.dateFormatter.string(from: self.date)
+           return self.line.hashValue ^ self.band.hashValue ^ self.metadata.hashValue
         }
     }
 }
