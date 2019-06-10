@@ -9,22 +9,28 @@
 import SwiftUI
 import Combine
 
-final class UserData : BindableObject {
-    let didChange = PassthroughSubject<UserData, Never>()
+final class DaysStore : BindableObject {
+    let didChange = PassthroughSubject<DaysStore, Never>()
     
-    var shows : [Show] = [
-        Show(date: Date(), artist: "Marcus King Band", location: "Brooklyn Bowl"),
-        Show(date: Date(timeInterval: 60*60*24, since: Date()), artist: "FREE Parquet Courts, Sachiko Kanenobu", location: "Summerstage"),
-        Show(date: Date(), artist: "Dead Meadow, Dommengang", location: "The Bell House (Brooklyn)")
-        ] {
+    var days: [Day] = [] {
         didSet {
             didChange.send(self)
         }
     }
     
-    var groupedShows : [String : [Show]] {
-        get {
-            return Dictionary(grouping: self.shows, by: { $0.sectionHeader })
+    let service: ShowService
+    init(service: ShowService) {
+        self.service = service
+    }
+    
+    func fetch() {
+        service.get() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let items): self?.days = items
+                    case .failure: self?.days = []
+                }
+            }
         }
     }
 }

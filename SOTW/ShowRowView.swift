@@ -16,10 +16,10 @@ struct ShowRowView : View {
     }
     
     var body: some View {
-        HStack {
-            Text(show.artist).font(.headline)
+        VStack.init(alignment: HorizontalAlignment.leading) {
+            Text(show.band).font(.headline)
             Spacer()
-            Text("@ \(show.location)").font(.subheadline)
+            Text("@ \(show.metadata)").font(.footnote)
         }
     }
 }
@@ -27,7 +27,7 @@ struct ShowRowView : View {
 #if DEBUG
 struct ShowRowView_Previews : PreviewProvider {
     static var previews: some View {
-        ShowRowView(Show(date: Date(), artist: "Phish", location: "Bill Graham Auditorium"))
+        ShowRowView(Show(line: "Phish", band: "Phish", metadata: "Bill Graham Auditorium", isAsterisked: false))
     }
 }
 #endif
